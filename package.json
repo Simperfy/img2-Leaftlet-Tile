@@ -8,8 +8,8 @@
     "test": "echo tests coming soon"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Simperfy",
+  "license": "MIT",
   "dependencies": {
     "sharp": "^0.27.1"
   }
