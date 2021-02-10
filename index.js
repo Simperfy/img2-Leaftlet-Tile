@@ -3,12 +3,12 @@ const fs = require('fs');
 const { loggerConfig } = require('./util');
 
 
-function img2LeafletTile ({inputFile, outputFolder, zoomLevels = [], shouldLog = false}) {
+async function img2LeafletTile ({inputFile, outputFolder, zoomLevels = [], shouldLog = false}) {
   if (zoomLevels.length <= 0) throw new Error('Please provide zoomLevels array');
 
   const logger = loggerConfig(shouldLog);
 
-  zoomLevels.forEach((zoomLevel) => {
+  for (const zoomLevel of zoomLevels) {
     const dimension = zoomLevel[1];
 
     const cropDimensionWidth = dimension;
@@ -26,74 +26,69 @@ function img2LeafletTile ({inputFile, outputFolder, zoomLevels = [], shouldLog =
 
     const paddedOutput = `${outputFolder}/padded_${z}.png`;
 
-    const image = sharp(inputFile);
+    let image = sharp(inputFile);
 
   // Set limit
-    const paddedImage = image.metadata().then((metadata) => {
-      logger(`Input fileName: ${inputFile}`);
-      logger(`Input dimension: ${metadata.width} x ${metadata.height}`);
-      const padX = getPadding(metadata.width, cropDimensionWidth);
-      const padY = getPadding(metadata.height, cropDimensionHeight);
+    const metadata = await image.metadata();
+    logger(`Input fileName: ${inputFile}`);
+    logger(`Input dimension: ${metadata.width} x ${metadata.height}`);
+    const padX = getPadding(metadata.width, cropDimensionWidth);
+    const padY = getPadding(metadata.height, cropDimensionHeight);
 
-      logger("added X padding: ", padX);
-      logger("added Y padding: ", padY);
-      xLimit = metadata.width + padX;
-      yLimit = metadata.height + padY;
+    logger("Crop Dimension: ", dimension);
+    logger("added X padding: ", padX);
+    logger("added Y padding: ", padY);
+    xLimit = metadata.width + padX;
+    yLimit = metadata.height + padY;
 
-      logger(`New dimension: ${xLimit} x ${yLimit}`);
-      logger('\n');
+    logger(`New dimension: ${xLimit} x ${yLimit}`);
 
-      return image.extend({
+    const paddedImage = image.extend({
         top: 0,
         left: 0,
         right: padX,
         bottom: padY,
         background: {r: 0, g: 0, b: 0, alpha: 0}
-      })
-    });
+      });
 
-    paddedImage.then((image) => image.toFile(paddedOutput))
-    .then((_) => {
-      const newImage = sharp(paddedOutput);
-      const pendingPromises = [];
+    image = await paddedImage.toFile(paddedOutput);
 
-      logger('\n');
-      logger('Total row: ' + xLimit / cropDimensionWidth);
-      logger('Total col: ' + yLimit / cropDimensionHeight);
+    const newImage = sharp(paddedOutput);
+    const pendingPromises = [];
 
-      let counter = 0;
+    logger('\n');
+    logger('Total row: ' + xLimit / cropDimensionWidth);
+    logger('Total col: ' + yLimit / cropDimensionHeight);
 
-      for (let a = 0; a < xLimit / cropDimensionWidth; a++) {
-        for (let b = 0; b < yLimit / cropDimensionHeight; b++) {
-          const folder = `${outputFolder}/${z}/${a}/`
-          const filename = `${b}.png`;
-          const output = folder + filename;
+    let counter = 0;
 
-          fs.mkdirSync(folder, {recursive: true});
-          x = a * cropDimensionWidth;
-          y = b * cropDimensionHeight;
-          ++counter;
+    for (let a = 0; a < xLimit / cropDimensionWidth; a++) {
+      for (let b = 0; b < yLimit / cropDimensionHeight; b++) {
+        const folder = `${outputFolder}/${z}/${a}/`
+        const filename = `${b}.png`;
+        const output = folder + filename;
 
-          const m = newImage.extract({
-            left: x,
-            top: y,
-            width: cropDimensionWidth,
-            height: cropDimensionHeight
-          }).toFile(output);
+        fs.mkdirSync(folder, {recursive: true});
+        x = a * cropDimensionWidth;
+        y = b * cropDimensionHeight;
+        ++counter;
 
-          pendingPromises.push(m);
-        }
+        const m = newImage.extract({
+          left: x,
+          top: y,
+          width: cropDimensionWidth,
+          height: cropDimensionHeight
+        }).toFile(output);
+
+        pendingPromises.push(m);
       }
+    }
 
-      return Promise.resolve({pendingPromises, paddedOutput, counter});
-    })
-    .then(({pendingPromises, paddedOutput, counter}) => {
-      removePaddedFile(pendingPromises, paddedOutput, counter);
-    });
-  });
+    await removePaddedFile(pendingPromises, paddedOutput, counter);
+  }
 
 
-  function removePaddedFile(pendingPromises, paddedOutput, counter) {
+  async function removePaddedFile(pendingPromises, paddedOutput, counter) {
     Promise.all(pendingPromises).then((_) => {
       logger('\n');
 
@@ -103,6 +98,8 @@ function img2LeafletTile ({inputFile, outputFolder, zoomLevels = [], shouldLog =
       });
 
       logger(`Generated ${counter} files.`);
+
+      return true;
     });
   }
 
