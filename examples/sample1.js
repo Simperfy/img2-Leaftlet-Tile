@@ -1,8 +1,8 @@
-const img2LeafletTile = require('./index');
+const img2LeafletTile = require('../lib');
 const path = require('path');
 
-const inputPath = path.join(__dirname, 'in/input.png');
-const outputPath = path.join(__dirname, 'out');
+const inputPath = path.join(__dirname, 'in/input1.png');
+const outputPath = path.join(__dirname, 'output1');
 
 const zoomLevels = [
     [1, 2048], // 2048 x 2048

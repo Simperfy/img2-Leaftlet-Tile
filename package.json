@@ -2,9 +2,9 @@
   "name": "img2-leaflet-tiles",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node lib/index.js",
     "test": "echo tests coming soon"
   },
   "keywords": [],
