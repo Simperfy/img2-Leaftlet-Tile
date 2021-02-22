@@ -1,6 +1,37 @@
 # img2-Leaftlet-Tile
 A library for converting images to leaflet tiles
 
+<details>
+<summary>Output Folder structure</summary>
+<br>
+
+```
+Output folder structure looks like this:
+
+-z
+--x
+---y.png
+
+=========
+
+-0
+--0
+---0.png
+-0
+--0
+---1.png
+...
+-0
+--1
+---0.png
+...
+-1
+--1
+---0.png
+```
+
+</details>
+
 # Installation
 `npm i img2-leaflet-tiles`
 
@@ -27,6 +58,8 @@ img2LeafletTile({
   shouldLog: true, // log info
 });
 ```
+
+The example above will produce "output1" folder which contains 4 levels of zoom that can be used for [leaflet](https://leafletjs.com/).
 
 # Example
 sample input:
