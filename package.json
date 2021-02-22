@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "node lib/index.js",
-    "test": "echo tests coming soon"
+    "test": "echo \"tests coming soon\""
   },
   "keywords": [],
   "author": "Simperfy",
