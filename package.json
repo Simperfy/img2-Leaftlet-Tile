@@ -7,10 +7,19 @@
     "start": "node lib/index.js",
     "test": "echo \"tests coming soon\""
   },
-  "keywords": [],
+  "keywords": [
+    "leaflet",
+    "tilemap",
+    "convert"
+  ],
   "author": "Simperfy",
   "license": "MIT",
   "dependencies": {
     "sharp": "^0.27.1"
+  },
+  "homepage": "https://github.com/Simperfy/img2-Leaftlet-Tile",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Simperfy/img2-Leaftlet-Tile.git"
   }
 }
