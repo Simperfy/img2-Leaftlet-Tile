@@ -32,10 +32,14 @@ Output folder structure looks like this:
 
 </details>
 
-# Installation
+<br>
+
+# Installation 🔨
 `npm i img2-leaflet-tiles`
 
-# Usage
+<br>
+
+# Usage ▶️
 > Recommended to use .png
 ```js
 const img2LeafletTile = require('img2-leaflet-tiles');
@@ -61,7 +65,11 @@ img2LeafletTile({
 
 The example above will produce "output1" folder which contains 4 levels of zoom that can be used for [leaflet](https://leafletjs.com/).
 
-# Example
+<br>
+
+# Example 🗺
+[See live version](https://simperfy.github.io/img2-Leaftlet-Tile/)
+
 sample input:
 
 <img src="https://user-images.githubusercontent.com/28738855/108728062-2998ef00-7564-11eb-9dc8-6a5e0163022b.png" width="650" height="300">
@@ -70,8 +78,12 @@ sample output:
 
 <img src="https://user-images.githubusercontent.com/28738855/108722354-05d2aa80-755e-11eb-99ef-d4f7c36f8be4.png" width="650" height="300">
 
-# License
+<br>
+
+# License 💳
 Distributed under the MIT License. See LICENSE for more information.
 
-# Acknowledgements
+<br>
+
+# Acknowledgements 🙇
 [Google Maps](https://www.google.com/maps) - for sample input
