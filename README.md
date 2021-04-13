@@ -1,4 +1,5 @@
 # img2-Leaftlet-Tile
+
 A library for converting images to leaflet tiles
 
 <details>
@@ -35,24 +36,27 @@ Output folder structure looks like this:
 <br>
 
 # Installation 🔨
+
 `npm i img2-leaflet-tiles`
 
 <br>
 
 # Usage ▶️
-> Recommended to use .png
-```js
-const img2LeafletTile = require('img2-leaflet-tiles');
-const path = require('path');
 
-const inputPath = path.join(__dirname, 'input/input.png'); // path to input image
-const outputPath = path.join(__dirname, 'output1'); // path to folder output
+> Recommended to use .png
+
+```js
+const img2LeafletTile = require("img2-leaflet-tiles");
+const path = require("path");
+
+const inputPath = path.join(__dirname, "input/input.png"); // path to input image
+const outputPath = path.join(__dirname, "output1"); // path to folder output
 
 const zoomLevels = [
-    [1, 2048], // 2048 x 2048
-    [2, 1024], // 1024 x 1024
-    [3, 512], // 512 x 512
-    [4, 256], // 256 x 256
+  [1, 2048, 1024], // 2048 x 2048, resize to 1024 x 1024
+  [2, 1024], // 1024 x 1024
+  [3, 512], // 512 x 512
+  [4, 256], // 256 x 256
 ];
 
 img2LeafletTile({
@@ -68,6 +72,7 @@ The example above will produce "output1" folder which contains 4 levels of zoom 
 <br>
 
 # Example 🗺
+
 [See live version](https://simperfy.github.io/img2-Leaftlet-Tile/)
 
 sample input:
@@ -81,9 +86,11 @@ sample output:
 <br>
 
 # License 💳
+
 Distributed under the MIT License. See LICENSE for more information.
 
 <br>
 
 # Acknowledgements 🙇
+
 [Google Maps](https://www.google.com/maps) - for sample input
